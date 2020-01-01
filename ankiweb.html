@@ -1,12 +1,31 @@
-Say you have note1 (with the new cards 1,2,3) and note2 (with the new cards A,B). Anki will show you the cards in this order: 1,A,2,B,3 even if you have disabled "Bury related new cards until the next day". There is no option that allows you to show the cards in the order 1,2,3,A,B. This add-on allows you to disable this same-day spacing from the menu "Study".
+<b>READ THIS DESCRIPTION CAREFULLY</b>.
+
+This description on this page only applies to the add-on for Anki version for 2.1. 
+
+Say you have note1 (with the new cards 1,2,3) and note2 (with the new cards A,B). Anki will show you the cards in this order: 1,A,2,B,3 even if you have disabled "Bury related new cards until the next day". There is no option that allows you to show the cards in the order 1,2,3,A,B. This add-on allows you to disable this same-day spacing from the menu "Study". 
+
+This add-on is intended to work only in very few situations. This add-on does not help to always study in a fixed order. If you want this have a look at <a href="" rel="nofollow">this add-on</a>.
+
+1. This add-on only works on <b>new</b> cards. In Anki cards can be in the state "new", "learning", and "review", see <a href="https://apps.ankiweb.net/docs/manual.html#study-overview" rel="nofollow">this section from the manual</a>. When you rate a card Anki doesn't apply exactly the interval it shows about the buttons. Instead it slightly randomizes the intervals, see <a href="https://apps.ankiweb.net/docs/manual.html#due-counts-and-time-estimates" rel="nofollow">this section from the manual</a>. So this add-on only makes sure that the first time a new card is shown they are right after each other in their proper order. The next time you see the cards they will probably not be in the same order and probably not be right after each other. Technically this add-on also affects some due reviews on the same day but this is negligible.
+2. This add-on respects your settings for sibling burying. If in the deck options you have enabled "bury related new cards until the next day" this add-on has no effect. You can change this in the add-on settings.
+
+<b># Limitations</b>
+add-ons can't affect reviews on your smartphone. As mentioned before this add-on is only intended for <b>new</b> cards and by default respects your deck settings.
+If you don't understand the terms deck settings or the distinction between "new", "learning" and "review" cards check the manual or e.g. watch a video named <a href="https://www.youtube.com/watch?v=1XaJjbCSXT0" rel="nofollow">Guide to Anki Intervals and Learning Steps</a>. 
+
+<b># bugs</b>
+Please do not use reviews for bug reports or support requests. I don't get notified of your reviews, and properly troubleshooting an issue through them is nearly impossible (formatting is limited and I can't reply multiple times). If you find a bug let me know on <a href="https://github.com/ijgnd/anki__show_due_siblings_in_order__no_same_day_spacing_randomization_for_siblings/issues" rel="nofollow">github</a> or via reddit (/u/ijgnord).
 
 <b>other authors</b>
 - <a href="https://github.com/lovac42/ReMemorize" rel="nofollow">lovac42</a>
-- <a href="https://www.basiskarten.de/" rel="nofollow">Thomas Kahn</a>
+- <a href="https://www.basiskarten.de/" rel="nofollow">Thomas Kahn</a> (most German translations)
 
-<b>technical background</b>
-Same-day spacing in Anki occurs because in the function  <a href="https://github.com/dae/anki/blob/master/anki/sched.py#L1310" rel="nofollow">_burySiblings</a> there is code that is described as "if bury disabled, we still discard to give same-day spacing".
-
-<b>compatibility</b>
+<b>technical background, compatibility</b>
 - This add-on overwrites the built-in function "_burySiblings". It is not compatible to other add-ons that also overwrite/modify this function. As far as I see at the moment the only other add-on that changes this function is <a href="https://ankiweb.net/shared/info/413416269" rel="nofollow">Bury related notes</a>.
 - if future versions of Anki change the "_burySiblings" function you will run into problems.
+
+<b># Versions</b>
+- 2020-01-01 better compatibility to other add-ons (minor fix)
+- 2019-12-23 option to enable permanently, German translations, ...
+- 2019-04-01 don't add menu a second time (minor fix)
+- 2019-03-29 initial release

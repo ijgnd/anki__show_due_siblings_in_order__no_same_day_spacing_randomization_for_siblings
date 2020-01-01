@@ -1,64 +1,111 @@
+# Add-on for Anki - check the description on Ankiweb or 
+# License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
+# use this at your own risk
+
+# Copyright: - 2019 ijgnd
+#            - Ankitects Pty Ltd and contributors
+#            - Thomas Kahn (German translations)
+
+
+from types import SimpleNamespace
+
 from anki.lang import getLang
 
-if getLang() == "de":
+
+if getLang().startswith("de"):
     LANG = "de"
 else:
     LANG = "en"
 
+at = {}
 
-t_dc_label = {
-    "en": "Show sibling cards (= cards belonging to the same note) right after each other",
-    "de": "Karten, die zu derselben Notiz gehören, unmittelbar nacheinander abfragen",
+# at[""] = {
+#     "en" = ""
+#     "de" = ""
+# }
+
+at["togglemsg"] = {
+    "en": ("Option has been activated! Sibling Cards (= cards belonging to the same note) "
+           "will now be asked right after each other if you didn't enable 'Bury related "
+           "new cards until the next day' in the deck settings.<br><br>"
+           "To put the review of specific "
+           "cards off until tomorrow press the \"-\"-key when you are asked about them. "
+           "This makes sense in situations where you've just been asked: \"What does 'Kuchen' "
+           "mean in Englisch?\" And the next question is: \"What does 'cake' mean in "
+           "German?\"<br><br>"
+           "More information about this option can be found on the page "
+           "<a href=\"https://ankiweb.net/shared/info/268644742\">"
+           "of the corresponding Anki-Add-On</a>."),
+    "de": ("Option aktiviert! Karten, die zu derselben Notiz gehören, werden "
+           "jetzt unmittelbar nacheinander abgefragt, sofern du in den Deckeinstellungen "
+           "nicht \"Verwandte neue Karten nicht am selben Tag lernen\" aktiviert hast.<br><br>"
+           "Um bestimmte einzelne Karten erst morgen abfragen zu lassen, kannst du, "
+           "wenn du danach gefragt wirst, einfach die \"-\"-Taste (Bindestrich-Taste) "
+           "auf deiner Tastatur drücken. Das ist z.B. sinnvoll, wenn du gerade gefragt "
+           "wurdest: \"Was heißt 'Kuchen' auf Englisch?\" Und dann direkt danach: \"Was "
+           "bedeutet 'cake' auf Deutsch?\"<br><br>Weitere Infos zu dieser Funktion findest "
+           "du auf der Seite <a href=\"https://ankiweb.net/shared/info/268644742\">des "
+           "dazugehörigen Anki-Addons</a>."),
 }
 
 
-t_dc_explan = {
-    "en": (u"Say you have note1 (with the new cards 1,2,3) and note2 (with the new"
-           u"cards A,B). By default Anki will show you the cards in this mixed order: 1, A, 2, B, "
-           u"3. If the option \"%s\" is enabled the order will be: 1, 2, "
-           u"3, A, B.<br><br>This function is disabled (greyed out) when you have checked"
-           u"\"Bury related new cards until the next day\"." % t_dc_label[LANG]),
-    "de": (u"<b></b>Angenommen man hat eine Notiz1 (mit den neuen Karten 1,2,3) und eine Notiz2 "
-           u"(mit den Karten A,B). Dann wird Anki standardmäßig diese neuen Karten in folgender "
-           u"gemischter Reihenfolge anzeigen: 1, A, 2, B, 3. Wenn die Option \"%s\" aktiviert ist, "
-           u"gilt diese Reihenfolge: 1, 2, 3, A, B.<br><br>Diese Option ist deaktviert "
-           u"(ausgegraut) wenn die Option \"Verwandte neue Karten nicht am selben Tag lernen, "
-           u"sondern bis zum Folgetag zurückstellen\" aktiviert ist." % t_dc_label[LANG]),
+at["togglemsg_with_override"] = {
+    "en": ("Option has been activated! Sibling Cards (= cards belonging to the same note) "
+           "will now be asked right after each other and according to your settings in the "
+           "add-on config the deck settings for 'Bury related "
+           "new cards until the next day' will be ignored.<br><br>"
+           "To put the review of specific "
+           "cards off until tomorrow press the \"-\"-key when you are asked about them. "
+           "This makes sense in situations where you've just been asked: \"What does 'Kuchen' "
+           "mean in Englisch?\" And the next question is: \"What does 'cake' mean in "
+           "German?\"<br><br>"
+           "More information about this option can be found on the page "
+           "<a href=\"https://ankiweb.net/shared/info/268644742\">"
+           "of the corresponding Anki-Add-On</a>."),
+    "de": ("Option aktiviert! Karten, die zu derselben Notiz gehören, werden "
+           "jetzt unmittelbar nacheinander abgefragt. Aufgrund deiner Einstellungen in "
+           "der Add-on Konfiguration wird die Einstellung "
+           "\"Verwandte neue Karten nicht am selben Tag lernen\" aus den Stapeleinstellungen "
+           "ignoriert.<br><br>"
+           "Um bestimmte einzelne Karten erst morgen abfragen zu lassen, kannst du, "
+           "wenn du danach gefragt wirst, einfach die \"-\"-Taste (Bindestrich-Taste) "
+           "auf deiner Tastatur drücken. Das ist z.B. sinnvoll, wenn du gerade gefragt "
+           "wurdest: \"Was heißt 'Kuchen' auf Englisch?\" Und dann direkt danach: \"Was "
+           "bedeutet 'cake' auf Deutsch?\"<br><br>Weitere Infos zu dieser Funktion findest "
+           "du auf der Seite <a href=\"https://ankiweb.net/shared/info/268644742\">des "
+           "dazugehörigen Anki-Addons</a>."),
 }
 
 
-t_menu = {
+at["menuname"] = {
     "en": "&Study",
-    "de": "&Lernen",
+    "de": "&Kartenreihenfolge",
+}
+at["labelname"] = {
+    "en": "change scheduler - no same-day spacing for siblings/show due siblings in order",
+    "de": "Verwandte neue Karten direkt nacheinander abfragen",
 }
 
 
-t_menu_entry = {
-    "en": u'no same-day spacing for siblings/show due siblings in order (ignore deck settings)',
-    "de": u'Zusammengehörende Karten direkt nacheinander abfragen (Deckeinstellungen ignorieren)',
+at["startup_reminder_ignore_decksettings"] = {
+    "en": ('Info: add-on "show new siblings in order" is enabled and overrides the deck settings '
+           'for sibling burying.'),
+    "de": ('Hinweis: Erweiterung "show new siblings in order" ist aktiviert und überlagert '
+           'die Stapeleinstellung \"Verwandte neue Karten nicht am selben Tag lernen\"'),
+}
+
+at["startup_reminder"] = {
+    "en": 'Info: the add-on "show new siblings in order " is enabled',
+    "de": 'Zur Erinnerung: Die Erweiterung "show new siblings in order" ist aktiviert',
 }
 
 
-t_menu_toggle = {
-    "en": (u"Option has been activated! Sibling Cards (= cards belonging to the same note) "
-           u"will now always be asked right after each other and the deck setting for this "
-           u"option will be ignored/overriden.<br><br>"
-           u"To put the review of specific "
-           u"cards off until tomorrow press the \"-\"-key when you are asked about them. "
-           u"This makes sense in situations where you've just been asked: \"What does 'Kuchen' "
-           u"mean in Englisch?\" And the next question is: \"What does 'cake' mean in "
-           u"German?\"<br><br>"
-           u"More information about this option can be found on the page "
-           u"<a href=\"https://ankiweb.net/shared/info/268644742\">"
-           u"of the corresponding Anki-Add-On</a>."),
-    "de": (u"Option aktiviert! Karten, die zu derselben Notiz gehören, werden "
-           u"jetzt immer unmittelbar nacheinander abgefragt und die deck-spezifischen "
-           u"Einstellungen werden ignoriert/übergangen.<br><br>"
-           u"Um bestimmte einzelne Karten erst morgen abfragen zu lassen, kannst du, "
-           u"wenn du danach gefragt wirst, einfach die \"-\"-Taste (Bindestrich-Taste) "
-           u"auf deiner Tastatur drücken. Das ist z.B. sinnvoll, wenn du gerade gefragt "
-           u"wurdest: \"Was heißt 'Kuchen' auf Englisch?\" Und dann direkt danach: \"Was "
-           u"bedeutet 'cake' auf Deutsch?\"<br><br>Weitere Infos zu dieser Funktion findest "
-           u"du auf der Seite <a href=\"https://ankiweb.net/shared/info/268644742\">des "
-           u"dazugehörigen Anki-Addons</a>.")
-}
+localized = {}
+for k, v in at.items():
+    if LANG in v:
+        localized[k] = v[LANG]
+    elif "en" in v:
+        localized[k] = v["en"]
+    else:
+        print('missing text, value: {}'.format(k))
+t = SimpleNamespace(**localized)

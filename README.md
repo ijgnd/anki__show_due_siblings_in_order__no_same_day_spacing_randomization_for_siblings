@@ -1,3 +1,3 @@
 ### add-on for anki
 
-see [ankiweb]().
+see [ankiweb](https://ankiweb.net/shared/info/268644742).

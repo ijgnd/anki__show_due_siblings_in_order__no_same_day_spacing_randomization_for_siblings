@@ -1,1 +1,5 @@
- 
+{
+    "hide startup warning": false,
+    "enabled": true,
+    "override deck bury options": false
+}
