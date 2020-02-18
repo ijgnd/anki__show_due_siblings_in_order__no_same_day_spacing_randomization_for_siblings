@@ -7,7 +7,6 @@
 
 
 from anki.hooks import addHook
-from anki.lang import getLang
 from anki.sched import Scheduler as schedv1
 from anki.schedv2 import Scheduler as schedv2
 from anki.utils import ids2str, intTime

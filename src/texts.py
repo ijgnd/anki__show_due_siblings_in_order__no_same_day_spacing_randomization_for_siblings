@@ -9,13 +9,23 @@
 
 from types import SimpleNamespace
 
-from anki.lang import getLang
+from anki import version as anki_version
 
+old_anki = tuple(int(i) for i in anki_version.split(".")) < (2, 1, 21)
 
-if getLang().startswith("de"):
-    LANG = "de"
+if old_anki:
+    from anki.lang import getLang
+    if getLang().startswith("de"):
+        LANG = "de"
+    else:
+        LANG = "en"
 else:
-    LANG = "en"
+    from anki.lang import currentLang
+    if currentLang == "de":
+        LANG = "de"
+    else:
+        LANG = "en"
+
 
 at = {}
 
